@@ -28,6 +28,34 @@ x_large_font = pg.font.SysFont('Verdana',32)
 
 ### CLASS CREATIONS ###
 
+## Class for each player object
+class player():
+    ## Constructor for player with x coord, y coord, and player id
+    def __init__(self, player_id, x, y):
+        self.player_id = player_id
+        self.x=x
+        self.y=y
+    
+    ## Function for handling player movement- may need to be changed based on game mechanics
+    def move(self, direction):
+        if direction== "up":
+            self.y +=1
+        elif direction=="down":
+            self.y -=1
+        elif direction=="left":
+            self.x -=1
+        elif direction=="right":
+            self.x+=1
+
+    ## returns players current coordinates
+    def getCoords(self):
+        return (self.x, self.y)
+    
+    ## Sets players coordinates
+    def setCoords(self, x, y):
+        self.x = x
+        self.y = y
+
 ## Button Class for easy button and text drawing onto page ##
 class Button():         
     def __init__(self, x, y, w, h, text):
@@ -64,7 +92,6 @@ def check_coords(coord1, coord2):
 
 ## About Window function creates a new screen that displays basic information about how the game is played ##
 def about_window():
-
     about_screen = pg.display.set_mode((325,325))   #Initializes the window and background
     pg.display.set_caption("How to Play")
     background = pg.Surface((325,325))
@@ -398,4 +425,4 @@ def main_game_gui():
     return None
 
 main_game_gui()
-    
+
