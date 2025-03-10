@@ -83,7 +83,7 @@ class Button():
 
 ### FUNCTION CREATIONS ###
 
-## Simple function that returns True is 2 coordinates have the same values ##
+## Simple function that returns True if 2 coordinates have the same values ##
 def check_coords(coord1, coord2):           
     return (coord1 == coord2)
 
@@ -100,8 +100,42 @@ def about_window():
 
     return_button = Button(225,25,75,25, "Main Menu")   #Creates button to return to the main menu and About text
     return_button.draw(about_screen)
-# RRFIX: Add text
 
+    About = [   # Short game Description
+        "Wandering in the Woods is a game where players must",
+        "try to find each other in the dark and ominous woods.",
+        "It is very dark in the woods, so you must wander",
+        "aimlessly. Can you find your friends?"
+    ]
+
+    How_to_Play = [ # How to play- susceptible to change
+        "How to Play:",
+        "1. Use Arrow keys to move Player 1.",
+        "2. Use WASD keys to move Player 2.",
+        "3. Move around the grid and try to find each other.",
+        "4. The goal is to reach all of your friends in the woods.",
+        "5. Have fun and good luck!"
+    ]
+
+    # Draw the text
+    y_offset = 60  # Start position for the first line of text 
+   
+    for line in About:
+        text_surface = main_font.render(line, True, (0,0,0))
+        about_screen.blit(text_surface, (20, y_offset))
+        y_offset+=10
+    
+    y_offset+=20 # Extra spacing between how to play 
+
+    for line in How_to_Play:  ## Loop that prints each line in how to play txt
+        text_surface = main_font.render(line, True, (0, 0, 0))  # Black color for text
+        about_screen.blit(text_surface, (20, y_offset))  # Draw text with an offset
+        y_offset += 30  # Increase y position for the next line of text
+
+    # Update the display
+    pg.display.flip()
+# RRFIX: Add text
+    
     running = True
    
     while running:
