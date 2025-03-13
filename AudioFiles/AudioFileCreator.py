@@ -11,11 +11,10 @@ language = 'en'
 # Create obj for saying text
 myobj = gTTS(text=mytext, lang=language, slow=False)
 
-# Get current working directory 
-current_directory = os.getcwd()
-print(current_directory)
-# Creates the path for the new mp3 file
-save_path = os.path.join(current_directory, "AudioFiles" ,"test.mp3")
+# Get current file directory 
+current_directory = os.path.dirname(os.path.abspath(__file__))
+# Creates the path for the new mp3 file- CHANGE FILE NAME FOR EACH NEW AUDIO FILE
+save_path = os.path.join(current_directory,"Welcome.mp3")
 
 # Save converted audio
 try:

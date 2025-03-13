@@ -16,6 +16,7 @@
 import pygame as pg
 import pygame_gui as pgg
 import sys
+import os
 
 pg.init()
 pg.font.init()
@@ -85,7 +86,29 @@ class Button():
 def check_coords(coord1, coord2):           
     return (coord1 == coord2)
 
+# Function for playing specified audio file in AudioFiles folder
+def play_audio_file(fileName):
+    pg.mixer.init()
 
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    mp3_file_path = os.path.join(current_directory, "AudioFiles" , fileName)
+
+    #checks if audio is already playing
+    if pg.mixer.music.get_busy():
+        pg.mixer.music.stop()  # Stop any music that might already be playing
+
+    try:
+        # Load and play MP3 file once
+        pg.mixer.music.load(mp3_file_path)
+        pg.mixer.music.play(loops=0)
+
+        # Wait until the music finishes playing
+        while pg.mixer.music.get_busy():  # Keep playing until it's done
+            pg.time.Clock().tick(10)  # Delay to avoid high CPU usage during the wait
+
+    except Exception as e:
+        print(f"Error loading or playing the file: {e}")
+    return None
 
 ### WINDOW CREATIONS ###
 
@@ -421,6 +444,8 @@ def main_game_gui():
     about_button.draw(game_creation_screen)
 
 # RRFIX: Create picture for main menu
+    pg.display.update() # updates display before audio
+    play_audio_file("Welcome.mp3") # Plays welcome audio when main menu is loaded
 
     running = True
     while running:
