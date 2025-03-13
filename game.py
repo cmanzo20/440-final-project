@@ -24,8 +24,6 @@ main_font = pg.font.SysFont('Verdana', 10)
 large_font = pg.font.SysFont('Verdana',18)
 x_large_font = pg.font.SysFont('Verdana',32)
 
-
-
 ### CLASS CREATIONS ###
 
 ## Class for each player object
@@ -88,6 +86,7 @@ def check_coords(coord1, coord2):
     return (coord1 == coord2)
 
 
+
 ### WINDOW CREATIONS ###
 
 ## About Window function creates a new screen that displays basic information about how the game is played ##
@@ -134,7 +133,6 @@ def about_window():
 
     # Update the display
     pg.display.flip()
-# RRFIX: Add text
     
     running = True
    
@@ -153,8 +151,6 @@ def about_window():
 
         pg.display.update()
     main_game_gui()     #Runs the Main Game function and returns to main menu when no longer running
-
-
 
 ## Selection Window function creates a new screen where players select the width and height of the grid (between 1 and 20) ##
 ## as well as selects between 2, 3, and 4 players before moving onto the next set of selections ##
