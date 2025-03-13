@@ -16,6 +16,7 @@
 import pygame as pg
 import pygame_gui as pgg
 import sys
+import os
 
 pg.init()
 pg.font.init()
@@ -24,9 +25,35 @@ main_font = pg.font.SysFont('Verdana', 10)
 large_font = pg.font.SysFont('Verdana',18)
 x_large_font = pg.font.SysFont('Verdana',32)
 
-
-
 ### CLASS CREATIONS ###
+
+## Class for each player object
+class player():
+    ## Constructor for player with x coord, y coord, and player id
+    def __init__(self, player_id, x, y):
+        self.player_id = player_id
+        self.x=x
+        self.y=y
+    
+    ## Function for handling player movement- may need to be changed based on game mechanics
+    def move(self, direction):
+        if direction== "up":
+            self.y +=1
+        elif direction=="down":
+            self.y -=1
+        elif direction=="left":
+            self.x -=1
+        elif direction=="right":
+            self.x+=1
+
+    ## returns players current coordinates
+    def getCoords(self):
+        return (self.x, self.y)
+    
+    ## Sets players coordinates
+    def setCoords(self, x, y):
+        self.x = x
+        self.y = y
 
 ## Button Class for easy button and text drawing onto page ##
 class Button():         
@@ -55,16 +82,38 @@ class Button():
 
 ### FUNCTION CREATIONS ###
 
-## Simple function that returns True is 2 coordinates have the same values ##
+## Simple function that returns True if 2 coordinates have the same values ##
 def check_coords(coord1, coord2):           
     return (coord1 == coord2)
 
+# Function for playing specified audio file in AudioFiles folder
+def play_audio_file(fileName):
+    pg.mixer.init()
+
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    mp3_file_path = os.path.join(current_directory, "AudioFiles" , fileName)
+
+    #checks if audio is already playing
+    if pg.mixer.music.get_busy():
+        pg.mixer.music.stop()  # Stop any music that might already be playing
+
+    try:
+        # Load and play MP3 file once
+        pg.mixer.music.load(mp3_file_path)
+        pg.mixer.music.play(loops=0)
+
+        # Wait until the music finishes playing
+        while pg.mixer.music.get_busy():  # Keep playing until it's done
+            pg.time.Clock().tick(10)  # Delay to avoid high CPU usage during the wait
+
+    except Exception as e:
+        print(f"Error loading or playing the file: {e}")
+    return None
 
 ### WINDOW CREATIONS ###
 
 ## About Window function creates a new screen that displays basic information about how the game is played ##
 def about_window():
-
     about_screen = pg.display.set_mode((325,325))   #Initializes the window and background
     pg.display.set_caption("How to Play")
     background = pg.Surface((325,325))
@@ -73,8 +122,41 @@ def about_window():
 
     return_button = Button(225,25,75,25, "Main Menu")   #Creates button to return to the main menu and About text
     return_button.draw(about_screen)
-# RRFIX: Add text
 
+    About = [   # Short game Description
+        "Wandering in the Woods is a game where players must",
+        "try to find each other in the dark and ominous woods.",
+        "It is very dark in the woods, so you must wander",
+        "aimlessly. Can you find your friends?"
+    ]
+
+    How_to_Play = [ # How to play- susceptible to change
+        "How to Play:",
+        "1. Use Arrow keys to move Player 1.",
+        "2. Use WASD keys to move Player 2.",
+        "3. Move around the grid and try to find each other.",
+        "4. The goal is to reach all of your friends in the woods.",
+        "5. Have fun and good luck!"
+    ]
+
+    # Draw the text
+    y_offset = 60  # Start position for the first line of text 
+   
+    for line in About:
+        text_surface = main_font.render(line, True, (0,0,0))
+        about_screen.blit(text_surface, (20, y_offset))
+        y_offset+=10
+    
+    y_offset+=20 # Extra spacing between how to play 
+
+    for line in How_to_Play:  ## Loop that prints each line in how to play txt
+        text_surface = main_font.render(line, True, (0, 0, 0))  # Black color for text
+        about_screen.blit(text_surface, (20, y_offset))  # Draw text with an offset
+        y_offset += 30  # Increase y position for the next line of text
+
+    # Update the display
+    pg.display.flip()
+    
     running = True
    
     while running:
@@ -92,8 +174,6 @@ def about_window():
 
         pg.display.update()
     main_game_gui()     #Runs the Main Game function and returns to main menu when no longer running
-
-
 
 ## Selection Window function creates a new screen where players select the width and height of the grid (between 1 and 20) ##
 ## as well as selects between 2, 3, and 4 players before moving onto the next set of selections ##
@@ -364,6 +444,8 @@ def main_game_gui():
     about_button.draw(game_creation_screen)
 
 # RRFIX: Create picture for main menu
+    pg.display.update() # updates display before audio
+    play_audio_file("Welcome.mp3") # Plays welcome audio when main menu is loaded
 
     running = True
     while running:
@@ -398,4 +480,4 @@ def main_game_gui():
     return None
 
 main_game_gui()
-    
+
