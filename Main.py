@@ -29,7 +29,7 @@ x_large_font = pg.font.SysFont('Verdana', 32)
 ### CLASS CREATIONS ###
 
 ## Button Class for easy button and text drawing onto page ##
-class Button():
+class MenuButton():
     def __init__(self, x, y, w, h, text):
         self._x = x
         self._y = y
@@ -48,7 +48,6 @@ class Button():
         pg.draw.rect(window, ("dimgrey"), button_image, width=3, border_radius=5)
         display_text = large_font.render(self._text, False, color="dimgrey")  # Draws text onto button
         window.blit(display_text, (self._x + 7, self._y + 3))
-
 
 ### FUNCTION CREATIONS ###
 
@@ -90,7 +89,7 @@ def about_window():
     background.fill("whitesmoke")
     about_screen.blit(background,(0,0))
 
-    return_button = Button(225,25,75,25, "Main Menu")   #Creates button to return to the main menu and About text
+    return_button = MenuButton(225, 25, 75, 25, "Main Menu")  # Creates button to return to the main menu and About text
     return_button.draw(about_screen)
 
     About = [   # Short game Description
@@ -176,7 +175,7 @@ def selection_window():
     player_box = pgg.elements.UISelectionList(relative_rect=pg.Rect(275, 100, 100, 65), item_list=["2", "3", "4"],
                                               manager=pgmanager, object_id="player_number")
 
-    continue_button = Button(275, 175, 100, 50, "Continue")  # Button init
+    continue_button = MenuButton(275, 175, 100, 50, "Continue")  # Button init
     continue_button.draw_large(selection_screen)
 
     running = True
@@ -194,7 +193,7 @@ def selection_window():
                 # Continues to next selection screen if all 3 selectinos have been made, and the continue button has been pressed
                 if grid_width_bool and grid_height_bool and player_number_bool and (275 <= mouse_pos[0] <= 375) and (
                         175 <= mouse_pos[1] <= 225):
-                    grid_and_player_selection(int(grid_width), int(grid_height), int(player_number))
+                    grid_and_player_selection(int(grid_width), int(grid_height), int(player_number,))
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (
                     25 <= mouse_pos[0] <= 125):  # Uses same elif statement where
@@ -220,7 +219,7 @@ def selection_window():
 
 ## Grid and Player Selection function creates a new window that takes in previously selected grid width, height, and # of players ##
 ## and lets the user pick where each player will be starting on the grid ##
-def grid_and_player_selection(grid_width, grid_height, number_of_players):
+def grid_and_player_selection(grid_width, grid_height, number_of_players,):
 
     cell_size = 50  # Size of each grid cell
     grid_offset_x, grid_offset_y = 50, 100  # Where the grid starts
@@ -244,11 +243,14 @@ def grid_and_player_selection(grid_width, grid_height, number_of_players):
     matching_coords_text = large_font.render("Player coordinates cannot match!", None,
                                              color="dimgrey")  # Text init for later
 
-    start_button = Button(250, 150 + 100 * number_of_players, 90, 40, "Start!")  # Start Button init
+    start_button = MenuButton(250, 150 + 100 * number_of_players, 90, 40, "Start!")  # Start Button init
     start_button.draw_large(selection_screen)
 
     pg.init()
-    selection_screen = pg.display.set_mode((grid_width * cell_size + 100, grid_height * cell_size + 150))
+    min_extra_space = 100  #  extra space at the bottom for the button
+    window_height = max(grid_height * cell_size + min_extra_space, 600)  #  minimum height
+
+    selection_screen = pg.display.set_mode((grid_width * cell_size + 100, window_height))
     pg.display.set_caption("Player Selection")
 
     background = pg.Surface(selection_screen.get_size())
@@ -259,8 +261,11 @@ def grid_and_player_selection(grid_width, grid_height, number_of_players):
     selection_clock = pg.time.Clock()
     refresh = selection_clock.tick(60) / 1000
 
-    # "Start" button (disabled until all players pick a position)
-    start_button = Button(selection_screen.get_width() // 2 - 45, grid_height * cell_size + 120, 90, 40, "Start")
+
+    button_padding = 200  # can move the button higher or lower
+    start_button_y = min(window_height - 60, grid_height * cell_size + button_padding)
+
+    start_button = MenuButton(selection_screen.get_width() // 2 - 45, start_button_y, 90, 40, "Start")
 
     current_player = 1  # Start with Player 1
 
@@ -312,8 +317,10 @@ def grid_and_player_selection(grid_width, grid_height, number_of_players):
                         start_button._y <= mouse_pos[1] <= start_button._y + start_button._h
                 ):
                     print("Game Starting with selected positions:", selected_positions)
-                    player_positions = list(selected_positions.values())
-                    game = Game(grid_width, grid_height, player_positions, cell_size=40)  # Ensure correct cell size
+
+
+                    game = Game(grid_width, grid_height, list(selected_positions.values()), cell_size=40,selection_func=grid_and_player_selection)
+
                     game.run()
             pgmanager.process_events(event)
 
@@ -344,16 +351,16 @@ def main_game_gui():
     display_text_3 = x_large_font.render("Woods", False, color="dimgrey")
     game_creation_screen.blit(display_text_3, (107, 440))
 
-    K_though_2_button = Button(25, 300, 75, 50, "K Through 2")  # Button inits
+    K_though_2_button = MenuButton(25, 300, 75, 50, "K Through 2")  # Button inits
     K_though_2_button.draw(game_creation_screen)
 
-    three_through_5_button = Button(125, 300, 75, 50, "3 Through 5")
+    three_through_5_button = MenuButton(125, 300, 75, 50, "3 Through 5")
     three_through_5_button.draw(game_creation_screen)
 
-    six_through_8_button = Button(225, 300, 75, 50, "6 Through 8")
+    six_through_8_button = MenuButton(225, 300, 75, 50, "6 Through 8")
     six_through_8_button.draw(game_creation_screen)
 
-    about_button = Button(250, 25, 50, 25, "About")
+    about_button = MenuButton(250, 25, 50, 25, "About")
     about_button.draw(game_creation_screen)
 
     # RRFIX: Create picture for main menu
