@@ -198,14 +198,17 @@ def selection_window():
                     25 <= mouse_pos[0] <= 125):  # Uses same elif statement where
                 grid_width = event.text  # events of new list selection type at correct UI box location
                 grid_width_bool = True  # updates appropriate variable as well as changes a bool to True
+                print(event.text)  # to make sure all necessary selections have been made
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (150 <= mouse_pos[0] <= 250):
                 grid_height = event.text
                 grid_height_bool = True
+                print(event.text)
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (275 <= mouse_pos[0] <= 375):
                 player_number = event.text
                 player_number_bool = True
+                print(event.text)
 
             pgmanager.process_events(event)  # Used for pygame GUI events
 
@@ -218,7 +221,7 @@ def selection_window():
 
 ## Grid and Player Selection function creates a new window that takes in previously selected grid width, height, and # of players ##
 ## and lets the user pick where each player will be starting on the grid ##
-def grid_and_player_selection(grid_width, grid_height, number_of_players,):
+def grid_and_player_selection(grid_width, grid_height, number_of_players, stats=None):
 
     cell_size = 50  # Size of each grid cell
     grid_offset_x, grid_offset_y = 50, 100  # Where the grid starts
@@ -318,7 +321,7 @@ def grid_and_player_selection(grid_width, grid_height, number_of_players,):
                     print("Game Starting with selected positions:", selected_positions)
 
 
-                    game = Game(grid_width, grid_height, list(selected_positions.values()), cell_size=40,selection_func=grid_and_player_selection)
+                    game = Game(grid_width, grid_height, list(selected_positions.values()), stats=stats, cell_size=40,selection_func=grid_and_player_selection)
 
                     game.run()
             pgmanager.process_events(event)
@@ -378,16 +381,20 @@ def main_game_gui():
                 mouse_pos = pg.mouse.get_pos()
 
                 if (25 <= mouse_pos[0] <= 100) and (300 <= mouse_pos[1] <= 350):
+                    print("K through 2 Selected")
                     start_k2_game()  # Run K-2 game directly
 
 
                 elif (125 <= mouse_pos[0] <= 200) and (300 <= mouse_pos[1] <= 350):
+                    print("3 through 5")  # Launches 3-5 selection screen
                     selection_window()
 
                 elif (225 <= mouse_pos[0] <= 300) and (300 <= mouse_pos[1] <= 350):
+                    print("6 through 8")  # Launches 6-8 selection screen
                     selection_window()
 
                 elif (250 <= mouse_pos[0] <= 300) and (25 <= mouse_pos[1] <= 50):
+                    print("ABOUT")  # Launches about section
                     about_window()
 
         pg.display.update()
