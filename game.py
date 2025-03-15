@@ -102,10 +102,6 @@ def play_audio_file(fileName):
         pg.mixer.music.load(mp3_file_path)
         pg.mixer.music.play(loops=0)
 
-        # Wait until the music finishes playing
-        while pg.mixer.music.get_busy():  # Keep playing until it's done
-            pg.time.Clock().tick(10)  # Delay to avoid high CPU usage during the wait
-
     except Exception as e:
         print(f"Error loading or playing the file: {e}")
     return None
@@ -206,6 +202,9 @@ def selection_window():
     continue_button = Button(275,175,100,50,"Continue") #Button init
     continue_button.draw_large(selection_screen)
 
+    pg.display.update()
+    play_audio_file("SelectPrompt.mp3")
+
     running = True
 
     while running:
@@ -244,7 +243,6 @@ def selection_window():
         pg.display.update()
 
     main_game_gui()
-
 
 
 ## Grid and Player Selection function creates a new window that takes in previously selected grid width, height, and # of players ##
