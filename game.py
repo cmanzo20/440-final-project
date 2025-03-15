@@ -180,7 +180,7 @@ class Game:
 
         pygame.quit()
         sys.exit()
-=======
+
 ### INITIAL COMMENTS ###
 
 #Wandering in the Woods Game
