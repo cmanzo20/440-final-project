@@ -3,7 +3,7 @@ from gtts import gTTS
 import pygame
 
 # Text to be said
-mytext = 'Please select the coordinates the players will start at.'
+mytext = 'About the Game.'
 
 # Language for text
 language = 'en'
@@ -14,7 +14,7 @@ myobj = gTTS(text=mytext, lang=language, slow=False)
 # Get current file directory 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 # Creates the path for the new mp3 file- CHANGE FILE NAME FOR EACH NEW AUDIO FILE
-save_path = os.path.join(current_directory,"SelectCoords.mp3")
+save_path = os.path.join(current_directory,"About.mp3")
 
 # Save converted audio
 try:

@@ -335,6 +335,7 @@ def about_window():
 
     # Update the display
     pg.display.flip()
+    play_audio_file("About.mp3")
     
     running = True
    
