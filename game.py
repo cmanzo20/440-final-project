@@ -731,7 +731,6 @@ def main_game_gui():
                     selection_window()
 
                 elif (250 <= mouse_pos[0] <= 300) and (25 <= mouse_pos[1] <= 50):
-                    print("ABOUT")  #Launches about section
                     about_window()
 
         pg.display.update()
