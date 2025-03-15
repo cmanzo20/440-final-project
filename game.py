@@ -488,17 +488,15 @@ def selection_window():
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (25 <= mouse_pos[0] <= 125): #Uses same elif statement where
                 grid_width = event.text                            # events of new list selection type at correct UI box location 
                 grid_width_bool = True                             # updates appropriate variable as well as changes a bool to True
-                print(event.text)                                  # to make sure all necessary selections have been made
+                                 # to make sure all necessary selections have been made
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (150 <= mouse_pos[0] <= 250):
                 grid_height = event.text
                 grid_height_bool = True
-                print(event.text)
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (275 <= mouse_pos[0] <= 375):
                 player_number = event.text
                 player_number_bool = True
-                print(event.text)
 
             pgmanager.process_events(event) #Used for pygame GUI events
 
@@ -724,15 +722,12 @@ def main_game_gui():
                 mouse_pos = pg.mouse.get_pos()
 
                 if (25 <= mouse_pos[0] <= 100) and (300 <= mouse_pos[1] <= 350):
-                    print("K through 2")
-### FIX: SHOULD RUN GAME
+                    return None
 
                 elif (125 <= mouse_pos[0] <= 200) and (300 <= mouse_pos[1] <= 350):
-                    print("3 through 5")    #Launches 3-5 selection screen
                     selection_window()
 
                 elif (225 <= mouse_pos[0] <= 300) and (300 <= mouse_pos[1] <= 350):
-                    print("6 through 8")    #Launches 6-8 selection screen
                     selection_window()
 
                 elif (250 <= mouse_pos[0] <= 300) and (25 <= mouse_pos[1] <= 50):
