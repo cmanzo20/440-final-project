@@ -93,17 +93,17 @@ def about_window():
     return_button.draw(about_screen)
 
     About = [   # Short game Description
-        "Wandering in the Woods is a game where players must",
-        "try to find each other in the dark and ominous woods.",
+        "Wandering in the Woods is a game where players are",
+        "simulated wandering through the dark and ominous woods.",
         "It is very dark in the woods, so you must wander",
-        "aimlessly. Can you find your friends?"
+        "aimlessly. How long will it take to find your friends?"
     ]
 
     How_to_Play = [ # How to play- susceptible to change
         "How to Play:",
-        "1. Use Arrow keys to move Player 1.",
-        "2. Use WASD keys to move Player 2.",
-        "3. Move around the grid and try to find each other.",
+        "1. Select the difficulty (K-2, 3-5, 6-8).",
+        "2. Select the grid size and number of players (2-5 and up).",
+        "3. Watch as players wander aimlessly through the woods.",
         "4. The goal is to reach all of your friends in the woods.",
         "5. Have fun and good luck!"
     ]

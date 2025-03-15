@@ -385,7 +385,6 @@ def selection_window():
     continue_button = Button(275,175,100,50,"Continue") #Button init
     continue_button.draw_large(selection_screen)
 
-    pg.display.update()
     play_audio_file("SelectPrompt.mp3")
 
     running = True
@@ -491,6 +490,8 @@ def grid_and_player_selection(grid_width, grid_height, number_of_players):
     if number_of_players < 4:   #Sets player 4 bools to True if only 3 players (necessary for Start Button)
         player_4_x_bool = True
         player_4_y_bool = True            
+
+    play_audio_file("SelectCoords.mp3")
 
     running = True
     while running:
@@ -625,7 +626,6 @@ def main_game_gui():
     about_button.draw(game_creation_screen)
 
 # RRFIX: Create picture for main menu
-    pg.display.update() # updates display before audio
     play_audio_file("Welcome.mp3") # Plays welcome audio when main menu is loaded
 
     running = True
