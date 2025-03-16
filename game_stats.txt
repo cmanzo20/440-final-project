@@ -1,0 +1,4 @@
+Total Runs: 1
+Longest Run: 2.02 seconds
+Shortest Run: 2.02 seconds
+Average Run Time: 2.02 seconds
