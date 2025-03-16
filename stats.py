@@ -48,14 +48,3 @@ class Stats:
             file.write(f"Longest Run: {self.get_longest_run()} seconds\n")
             file.write(f"Shortest Run: {self.get_shortest_run()} seconds\n")
             file.write(f"Average Run Time: {self.get_average_run_time()} seconds\n")
-
-    def load_stats(self, filename="game_stats.txt"):
-
-        try:
-            with open(filename, "r") as file:
-                data = file.readlines()
-                print("Loaded Stats:")
-                for line in data:
-                    print(line.strip())  # Display saved stats
-        except FileNotFoundError:
-            print("No saved stats found")
