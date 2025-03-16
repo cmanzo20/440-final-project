@@ -71,10 +71,6 @@ def play_audio_file(fileName):
         pg.mixer.music.load(mp3_file_path)
         pg.mixer.music.play(loops=0)
 
-        # Wait until the music finishes playing
-        while pg.mixer.music.get_busy():  # Keep playing until it's done
-            pg.time.Clock().tick(10)  # Delay to avoid high CPU usage during the wait
-
     except Exception as e:
         print(f"Error loading or playing the file: {e}")
     return None
@@ -93,17 +89,17 @@ def about_window():
     return_button.draw(about_screen)
 
     About = [   # Short game Description
-        "Wandering in the Woods is a game where players are",
-        "simulated wandering through the dark and ominous woods.",
+        "Wandering in the Woods is a game where players must",
+        "try to find each other in the dark and ominous woods.",
         "It is very dark in the woods, so you must wander",
-        "aimlessly. How long will it take to find your friends?"
+        "aimlessly. Can you find your friends?"
     ]
 
     How_to_Play = [ # How to play- susceptible to change
         "How to Play:",
-        "1. Select the difficulty (K-2, 3-5, 6-8).",
-        "2. Select the grid size and number of players (2-5 and up).",
-        "3. Watch as players wander aimlessly through the woods.",
+        "1. Use Arrow keys to move Player 1.",
+        "2. Use WASD keys to move Player 2.",
+        "3. Move around the grid and try to find each other.",
         "4. The goal is to reach all of your friends in the woods.",
         "5. Have fun and good luck!"
     ]
@@ -124,6 +120,7 @@ def about_window():
         y_offset += 30  # Increase y position for the next line of text
 
     # Update the display
+    play_audio_file("About.mp3")
     pg.display.flip()
     
     running = True
@@ -178,6 +175,7 @@ def selection_window():
     continue_button = MenuButton(275, 175, 100, 50, "Continue")  # Button init
     continue_button.draw_large(selection_screen)
 
+    play_audio_file("SelectPrompt.mp3")
     running = True
 
     while running:
@@ -272,6 +270,7 @@ def grid_and_player_selection(grid_width, grid_height, number_of_players, stats=
 
     current_player = 1  # Start with Player 1
 
+    play_audio_file("SelectCoords.mp3")
     running = True
     while running:
         selection_screen.fill((240, 240, 240))
@@ -368,6 +367,7 @@ def main_game_gui():
 
     # RRFIX: Create picture for main menu
 
+    play_audio_file("Welcome.mp3")
     running = True
     while running:
 
