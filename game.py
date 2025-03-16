@@ -392,11 +392,12 @@ def about_window():
 
     How_to_Play = [ # How to play- susceptible to change
         "How to Play:",
-        "1. Select the difficulty (K-2, 3-5, 6-8).",
+        "1. Select the complexity (K-2, 3-5, 6-8).",
         "2. Select the grid size and number of players (2-5 and up).",
-        "3. Watch as players wander aimlessly through the woods.",
-        "4. The goal is to reach all of your friends in the woods.",
-        "5. Have fun and good luck!"
+        "3. Select each player's starting coordinates (2-5 and up)",
+        "4. Watch as players wander aimlessly through the woods.",
+        "5. The goal is to reach all of your friends in the woods.",
+        "6. Have fun and good luck!"
     ]
 
     # Draw the text
