@@ -25,8 +25,8 @@ class Button:
         text_rect = text_surface.get_rect(center=button_rect.center)
         screen.blit(text_surface, text_rect)
 
-    def draw_large(self, screen):
-        """Draws the button with a larger text size."""
+    def draw_large(self, screen): #draw a button, not that large though
+
         button_rect = pygame.Rect(self.x, self.y, self.w, self.h)
         pygame.draw.rect(screen, "dimgrey", button_rect, border_radius=5)
 
@@ -36,7 +36,7 @@ class Button:
         screen.blit(text_surface, text_rect)
 
     def is_clicked(self, mouse_pos):
-        """Check if the button was clicked."""
+
         return self.x <= mouse_pos[0] <= self.x + self.w and self.y <= mouse_pos[1] <= self.y + self.h
 
 class Game:
@@ -44,6 +44,7 @@ class Game:
         pygame.init()
         self.grid = Grid(grid_width, grid_height, cell_size)
         self.stats = stats if stats else Stats()# Initialize stats tracking
+        print(f"Using Stats object at memory address: {id(self.stats)}")  # Debugging
         self.stats.start_timer()  # Start the timer when the game begins
         window_width = grid_width * cell_size
         window_height = grid_height * cell_size
@@ -57,7 +58,7 @@ class Game:
 
         self.groups = [[player] for player in self.players]
 
-        self.font = pygame.font.SysFont("Arial", 24)  # Font for step counter
+        self.font = pygame.font.SysFont("Arial", 16)  # Font for step counter
 
 
 
@@ -85,7 +86,7 @@ class Game:
 
         if len(self.players) == 2 and self.grid.cols == 6 and self.grid.rows == 6:
             try:
-                happy_image = pygame.image.load("fireworks.jpg").convert_alpha()  # Load image
+                happy_image = pygame.image.load("../WanderingWoods/fireworks.jpg").convert_alpha()  # Load image
                 happy_image = pygame.transform.scale(happy_image, (300, 300))  # Resize if needed
                 happy_image.set_alpha(50)
                 self.screen.blit(happy_image, (self.screen.get_width() // 2 - 150, 50))  # Center image
@@ -203,7 +204,7 @@ class Game:
                         if self.selection_func:
                             print(
                                 f"🔄 Restarting with grid size ({self.grid.cols}, {self.grid.rows}) and {len(self.players)} players.")
-                            self.selection_func(self.grid.cols, self.grid.rows, len(self.players))
+                            self.selection_func(self.grid.cols, self.grid.rows, len(self.players),stats=self.stats)
 
                         return
 
@@ -221,7 +222,7 @@ class Game:
         running = True
 
         while running:
-            self.screen.fill((50, 50, 50,))  #  background grid color during game
+            self.screen.fill((50, 50, 50))  # Background color during game
             self.grid.draw(self.screen)  # Draw grid
 
             for event in pygame.event.get():
@@ -229,20 +230,28 @@ class Game:
                     running = False
 
             # Move each group together
+            step_made = False  # Flag to ensure only one step is counted per full movement cycle
             for group in self.groups:
                 leader = group[0]  # The leader moves first
+                old_x, old_y = leader.x, leader.y  # Store old position
                 leader.move()
 
+                # Check if the leader actually moved (to avoid counting unnecessary "movements")
+                if (leader.x, leader.y) != (old_x, old_y):
+                    step_made = True  # Only count a step if the leader moved
 
-                #  group members follow leader
+                # Group members follow leader
                 for player in group[1:]:
                     player.x, player.y = leader.x, leader.y
 
-                    # Increment overall game step counter once per move
+            # Only increment step counter once if any player moved
+            if step_made:
                 self.stats.increment_steps()
-                print(f"Total Steps: {self.stats.get_total_steps()}")  # Debug output
 
-            self.check_collisions()  # check for player meetings
+            # Debugging output
+            print(f"Total Steps: {self.stats.get_total_steps()}")
+
+            self.check_collisions()  # Check if players have met
 
             # Draw players
             for group in self.groups:
@@ -489,17 +498,15 @@ def selection_window():
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (25 <= mouse_pos[0] <= 125): #Uses same elif statement where
                 grid_width = event.text                            # events of new list selection type at correct UI box location 
                 grid_width_bool = True                             # updates appropriate variable as well as changes a bool to True
-                print(event.text)                                  # to make sure all necessary selections have been made
+                                 # to make sure all necessary selections have been made
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (150 <= mouse_pos[0] <= 250):
                 grid_height = event.text
                 grid_height_bool = True
-                print(event.text)
 
             elif event.type == pgg.UI_SELECTION_LIST_NEW_SELECTION and (275 <= mouse_pos[0] <= 375):
                 player_number = event.text
                 player_number_bool = True
-                print(event.text)
 
             pgmanager.process_events(event) #Used for pygame GUI events
 
@@ -725,19 +732,15 @@ def main_game_gui():
                 mouse_pos = pg.mouse.get_pos()
 
                 if (25 <= mouse_pos[0] <= 100) and (300 <= mouse_pos[1] <= 350):
-                    print("K through 2")
-### FIX: SHOULD RUN GAME
+                    return None
 
                 elif (125 <= mouse_pos[0] <= 200) and (300 <= mouse_pos[1] <= 350):
-                    print("3 through 5")    #Launches 3-5 selection screen
                     selection_window()
 
                 elif (225 <= mouse_pos[0] <= 300) and (300 <= mouse_pos[1] <= 350):
-                    print("6 through 8")    #Launches 6-8 selection screen
                     selection_window()
 
                 elif (250 <= mouse_pos[0] <= 300) and (25 <= mouse_pos[1] <= 50):
-                    print("ABOUT")  #Launches about section
                     about_window()
 
         pg.display.update()
