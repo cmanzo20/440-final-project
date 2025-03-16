@@ -86,7 +86,7 @@ class Game:
 
         if len(self.players) == 2 and self.grid.cols == 6 and self.grid.rows == 6:
             try:
-                happy_image = pygame.image.load("../WanderingWoods/fireworks.jpg").convert_alpha()  # Load image
+                happy_image = pygame.image.load("fireworks.jpg").convert_alpha()  # Load image
                 happy_image = pygame.transform.scale(happy_image, (300, 300))  # Resize if needed
                 happy_image.set_alpha(50)
                 self.screen.blit(happy_image, (self.screen.get_width() // 2 - 150, 50))  # Center image
