@@ -97,11 +97,12 @@ def about_window():
 
     How_to_Play = [ # How to play- susceptible to change
         "How to Play:",
-        "1. Use Arrow keys to move Player 1.",
-        "2. Use WASD keys to move Player 2.",
-        "3. Move around the grid and try to find each other.",
-        "4. The goal is to reach all of your friends in the woods.",
-        "5. Have fun and good luck!"
+        "1. Select the complexity (K-2, 3-5, 6-8).",
+        "2. Select the grid size and number of players (2-5 and up).",
+        "3. Select each player's starting coordinates (2-5 and up).",
+        "4. Watch as players wander aimlessly through the woods.",
+        "5. The goal is to reach all of your friends in the woods.",
+        "6. Have fun and good luck!"
     ]
 
     # Draw the text
