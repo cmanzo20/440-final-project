@@ -3,7 +3,7 @@ Wandering in the Woods is a game simulation aimed at helping different age group
 ### **Objectives**
 Students are tasked with watching simulations and reading assessments to understand how grid size, player count, and player position can all impact how long players spend wandering.
 ### **Setup**
-To begin the application, open the executable file under the directory dist-> game ->game.exe.
+Once cloning the repository, users can begin the application by opening the executable file, which can be located in: the *dist* folder followed by the *game* folder; the actual game is labelled **Game.exe**.
 Wandering in the Woods has three levels of complexity that can be selected by the player. For ages K-2, students press the labelled button for the simulation to begin.
 For ages 3-5 and 6-8, students are given choices for grid size, number of players, and player starting position. After moving past the start screen,
 students select the width and height of the grid, ranging from one to twenty spaces. They also select between two to four players. Once all items are selected, students will move on
